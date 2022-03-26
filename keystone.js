@@ -1,5 +1,5 @@
 import { config } from '@keystone-6/core';
-import { User } from './schema';
+import { User, Post } from './schema';
 
 export default config({
     db: {
@@ -8,5 +8,6 @@ export default config({
     }, 
     lists: {
         User,
+        Post,
     },
 })

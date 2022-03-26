@@ -15,6 +15,16 @@ model User {
   id    String @id @default(cuid())
   name  String @default("")
   email String @default("")
+  posts Post[] @relation("Post_author")
 
   @@index([email])
+}
+
+model Post {
+  id       String  @id @default(cuid())
+  title    String  @default("")
+  author   User?   @relation("Post_author", fields: [authorId], references: [id])
+  authorId String? @map("author")
+
+  @@index([authorId])
 }
