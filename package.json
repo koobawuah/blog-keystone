@@ -1,0 +1,28 @@
+{
+  "name": "blog-keystone",
+  "version": "1.0.0",
+  "description": "Simple keystone boilerplate blog",
+  "main": "keystone.js",
+  "dependencies": {
+    "@keystone-6/core": "^1.1.0",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "keystone dev",
+    "start": "keystone start",
+    "build": "keystone build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koobawuah/blog-keystone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koobawuah/blog-keystone/issues"
+  },
+  "homepage": "https://github.com/koobawuah/blog-keystone#readme"
+}
