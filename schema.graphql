@@ -117,7 +117,12 @@ type Post {
   id: ID!
   title: String
   author: User
+  pusblishedAt: DateTime
+  status: String
 }
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input PostWhereUniqueInput {
   id: ID
@@ -130,16 +135,61 @@ input PostWhereInput {
   id: IDFilter
   title: StringFilter
   author: UserWhereInput
+  pusblishedAt: DateTimeNullableFilter
+  status: StringNullableFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
 }
 
 input PostOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  pusblishedAt: OrderDirection
+  status: OrderDirection
 }
 
 input PostUpdateInput {
   title: String
   author: UserRelateToOneForUpdateInput
+  pusblishedAt: DateTime
+  status: String
 }
 
 input UserRelateToOneForUpdateInput {
@@ -156,6 +206,8 @@ input PostUpdateArgs {
 input PostCreateInput {
   title: String
   author: UserRelateToOneForCreateInput
+  pusblishedAt: DateTime
+  status: String
 }
 
 input UserRelateToOneForCreateInput {
