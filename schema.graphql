@@ -5,6 +5,7 @@ type User {
   id: ID!
   name: String
   email: String
+  password: PasswordState
   posts(
     where: PostWhereInput! = {}
     orderBy: [PostOrderByInput!]! = []
@@ -14,8 +15,13 @@ type User {
   postsCount(where: PostWhereInput! = {}): Int
 }
 
+type PasswordState {
+  isSet: Boolean!
+}
+
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
 
 input UserWhereInput {
@@ -87,6 +93,7 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  password: String
   posts: PostRelateToManyForUpdateInput
 }
 
@@ -105,6 +112,7 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  password: String
   posts: PostRelateToManyForCreateInput
 }
 
@@ -236,6 +244,33 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  endSession: Boolean!
+  authenticateUserWithPassword(
+    email: String!
+    password: String!
+  ): UserAuthenticationWithPasswordResult
+  createInitialUser(
+    data: CreateInitialUserInput!
+  ): UserAuthenticationWithPasswordSuccess!
+}
+
+union UserAuthenticationWithPasswordResult =
+    UserAuthenticationWithPasswordSuccess
+  | UserAuthenticationWithPasswordFailure
+
+type UserAuthenticationWithPasswordSuccess {
+  sessionToken: String!
+  item: User!
+}
+
+type UserAuthenticationWithPasswordFailure {
+  message: String!
+}
+
+input CreateInitialUserInput {
+  name: String
+  email: String
+  password: String
 }
 
 type Query {
@@ -256,7 +291,10 @@ type Query {
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
   keystone: KeystoneMeta!
+  authenticatedItem: AuthenticatedItem
 }
+
+union AuthenticatedItem = User
 
 type KeystoneMeta {
   adminMeta: KeystoneAdminMeta!
