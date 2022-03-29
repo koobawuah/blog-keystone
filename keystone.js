@@ -1,13 +1,20 @@
-import { config } from '@keystone-6/core';
-import { User, Post } from './schema';
+import { config } from "@keystone-6/core";
+import { withAuth, session } from "./authentiation/auth";
+import { User, Post } from "./schema";
 
-export default config({
+export default withAuth(
+  config({
     db: {
-        provider: 'sqlite',
-        url: 'file:./keystone.db',
-    }, 
-    lists: {
-        User,
-        Post,
+      provider: "sqlite",
+      url: "file:./keystone.db",
     },
-})
+    lists: {
+      User,
+      Post,
+    },
+    session,
+    ui: {
+      isAccessAllowed: (context) => !!context.session?.data,
+    },
+  })
+);
